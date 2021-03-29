@@ -1,0 +1,21 @@
+.nav-container {
+    flex-grow: 1;
+    padding: 0;
+    
+    .search-input {
+        padding-left: 0;
+        width: 33%;
+        
+        form {
+            width: 100%;
+        }
+    }
+}
+
+.ui.menu.top-menu {
+    border: none;
+
+    .header-icon {
+        color: #a0a0a0;
+    }
+}
