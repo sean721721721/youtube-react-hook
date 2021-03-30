@@ -1,9 +1,12 @@
 import React from 'react';
 import './Watch.scss';
+import Video from '../../components/Video/Video';
 
 const Watch = () => {
     return (
-        <div>Watch component goes here</div>
+        <div>
+            <Video id="-7fuHEEmEjs"/>
+        </div>
     )
 }
 

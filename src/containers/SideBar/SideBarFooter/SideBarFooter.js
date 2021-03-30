@@ -1,5 +1,4 @@
 import React from 'react';
-import SideBarHeader from '../SideBarHeader/SideBarHeader';
 import './SideBarFooter.scss';
 
 const SideBarFooter = () => {
