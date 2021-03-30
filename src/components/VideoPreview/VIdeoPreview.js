@@ -6,7 +6,7 @@ const VideoPreview = () => {
     return (
         <div className="video-preview">
             <div className="image-container">
-                <Image src="http://via.placeholder.com/210x118"/>
+                <Image src="http://via.placeholder.com/320x180"/>
                 <div className="time-label">
                     <span>05:22</span>
                 </div>

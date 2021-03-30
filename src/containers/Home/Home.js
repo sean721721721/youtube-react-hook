@@ -1,11 +1,14 @@
 import React from 'react';
-import VideoPreview from '../../components/VideoPreview/VIdeoPreview';
+import VideoGrid from '../../components/VideoGrid/VideoGrid';
 import './Home.scss';
 
 const Home = () => {
     return (
         <div className="home">
-            <VideoPreview/>
+            <div className="responsive-video-grid-container">
+                <VideoGrid title="Trending"/>
+                <VideoGrid title="Autos & Vehicles" hideDivider={true}/>
+            </div>
         </div>
     )
 }

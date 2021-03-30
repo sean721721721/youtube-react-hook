@@ -9,7 +9,7 @@ exports[`VideoPreview renders 1`] = `
   >
     <Image
       as="img"
-      src="http://via.placeholder.com/210x118"
+      src="http://via.placeholder.com/320x180"
       ui={true}
     />
     <div
