@@ -1,9 +1,10 @@
-import {MOST_POPULAR} from '../actions/video';
+import {MOST_POPULAR, VIDEO_CATEGORIES} from '../actions/video';
 import {SUCCESS} from '../actions';
 
 const initialState = {
     byId: {},
     mostPopular: {},
+    categories: {},
 };
 
 export default function videos(state = initialState, action) {
@@ -11,6 +12,8 @@ export default function videos(state = initialState, action) {
     switch (action.type) {
         case MOST_POPULAR[SUCCESS]:
             return reduceFetchMostPopularVideos(action.response, state);
+        case VIDEO_CATEGORIES[SUCCESS]:
+            return reduceFetchVideoCategories(action.response, state);
         default:
             return state;
     }
@@ -37,5 +40,16 @@ function reduceFetchMostPopularVideos(response, prevState) {
         ...prevState,
         mostPopular,
         byId: { ...prevState.byId, ...videoMap},
+    };
+}
+
+function reduceFetchVideoCategories(response, prevState) {
+    const categoryMapping = response.items.reduce((acc, category) => {
+        acc[category.id] = category.snippet.title;
+        return acc;
+    }, {});
+    return {
+        ...prevState,
+        categories: categoryMapping,
     };
 }

@@ -1,9 +1,11 @@
 import {all, call, put, fork} from 'redux-saga/effects';
+import { watchVideoCategories } from './video';
 import { watchMostPopularVideos } from './video';
 
 export default function* () {
     yield all([
         fork(watchMostPopularVideos),
+        fork(watchVideoCategories),
     ]);
 }
 

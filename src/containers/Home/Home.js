@@ -26,15 +26,19 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (this.props.youtubeLibraryLoaded) {
-        console.log(this.props)
-      this.props.fetchMostPopularVideos();
+        this.fetchCategoriesAndMostPopularVideos();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.youtubeLibraryLoaded !== prevProps.youtubeLibraryLoaded) {
-      this.props.fetchMostPopularVideos();
+        this.fetchCategoriesAndMostPopularVideos();
     }
+  }
+
+  fetchCategoriesAndMostPopularVideos() {
+    this.props.fetchMostPopularVideos();
+    this.props.fetchVideoCategories();
   }
 }
 
@@ -46,8 +50,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const fetchMostPopularVideos = videoActions.mostPopular.request;
-  console.log(fetchMostPopularVideos)
-  return bindActionCreators({fetchMostPopularVideos}, dispatch);
+  const fetchVideoCategories = videoActions.categories.request;
+  return bindActionCreators({fetchMostPopularVideos, fetchVideoCategories}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
