@@ -15,18 +15,9 @@ exports[`Watch renders 1`] = `
     className="video-info-box"
     collapsed={true}
   />
-  <div
+  <Comments
     className="comments"
-    style={
-      Object {
-        "background": "#9013FE",
-        "height": "100px",
-        "width": "100%",
-      }
-    }
-  >
-    comments
-  </div>
+  />
   <RelatedVideos />
 </div>
 `;
