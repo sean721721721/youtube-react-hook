@@ -11,6 +11,20 @@ const WatchContent = (props) => {
     const video = useSelector(state => {
         return state.videos.byId[props.videoId];
     });
+
+    const relatedVideos = useSelector(state => {
+        const related = state.videos.related[props.videoId];
+        const relatedVideoIds = related ? related.items : [];
+        const videos = state.videos.byId;
+        if (relatedVideoIds) {
+            relatedVideoIds.map(videoId => console.log(videoId))
+            return relatedVideoIds.map(item => videos[item.videoId])
+                .filter(video => video);
+        }
+        return [];
+    })
+    
+
     if (!props.videoId) {
         return <div/>
     }
@@ -20,7 +34,7 @@ const WatchContent = (props) => {
             <VideoMetadata video={video}/>
             <VideoInfoBox className='video-info-box' video={video}/>
             <Comments className='comments'/>
-            <RelatedVideos className='relatedVideos'/>
+            <RelatedVideos className='relatedVideos' videos={relatedVideos}/>
         </div>
     );
 }
