@@ -1,20 +1,19 @@
 import {all, call, put, fork} from 'redux-saga/effects';
 import { watchMostPopularVideosByCategory, watchVideoCategories, watchMostPopularVideos } from './video';
+import {watchWatchDetails} from './watch';
 
 export default function* () {
     yield all([
         fork(watchMostPopularVideos),
         fork(watchVideoCategories),
         fork(watchMostPopularVideosByCategory),
+        fork(watchWatchDetails)
     ]);
 }
 
 export function* fecthEntity(request, entity, ...args) {
-    console.log(request, entity, ...args);
     try {
-        console.log(request);
         const response = yield call(request);
-        console.log(response.result, entity);
         yield put(entity.success(response.result, ...args));
     } catch(error) {
         yield put(entity.failure(error, ...args));

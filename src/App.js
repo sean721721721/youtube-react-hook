@@ -13,12 +13,15 @@ import {key} from './config';
 const API_KEY = key;
 class App extends Component {
   render() {
+    const {history, location} = this.props;
+    console.log(this.props);
+    console.log(history, location);
     return (
       <AppLayout>
         <Switch>
           {/* <Route path="/feed/trending" component={Trending}/> */}
           {/* <Route path="/results" render={() => <Search key={this.props.location.key}/>}/> */}
-          <Route path="/watch" render={() => <Watch key={this.props.location.key}/>}/>
+          <Route path="/watch" render={() => <Watch history={history} location={location} key={this.props.location.key}/>}/>
           <Route path="/" component={Home}/>
         </Switch>
       </AppLayout>

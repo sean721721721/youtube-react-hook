@@ -4,42 +4,44 @@ import {InfiniteScroll} from '../../../components/InfiniteScroll/InfiniteScroll'
 import './HomeContent.scss';
 import {useSelector} from 'react-redux';
 
-const HomeContent = () => {
+const HomeContent = (props) => {
+    console.log(props);
     const trendingVideos = useSelector(state => Object.values(state.videos.byId));
+
     const videosByCategory = useSelector(state => {
-        const {byCategories, byId, categories} = state;
-        return Object.keys(byCategories || {}).reduce((accumulator, categoryId) => {
-            const videoIds = byCategories[categoryId].items;
+        console.log(state.videos);
+        let {byCategory, byId, categories} = state.videos;
+        byCategory = byCategory ? byCategory : {};
+        console.log(state.videos)
+        return Object.keys(byCategory).reduce((accumulator, categoryId) => {
+            console.log(byCategory)
+            const videoIds = byCategory[categoryId].items;
             const categoryTitle = categories[categoryId];
             accumulator[categoryTitle] = videoIds.map(videoId => byId[videoId]);
+            console.log(accumulator)
             return accumulator;
         }, {});
     });
-    const videoCategoriesLoaded = useSelector(state => Object.keys(state.videos.categories || {}).length !== 0);
+    console.log(videosByCategory)
     const categoryGrid = getVideoGridsForCategories();
-    console.log(videoCategoriesLoaded);
+    console.log(categoryGrid)
     function getVideoGridsForCategories() {
         const categoryTitles = Object.keys(videosByCategory || {});
+        console.log(categoryTitles)
         return categoryTitles.map((categoryTitle,index) => {
-            const videos = this.props.videosByCategory[categoryTitle];
+            const videos = videosByCategory[categoryTitle];
             const hideDivider = index === categoryTitles.length - 1;
             return <VideoGrid title={categoryTitle} videos={videos} key={categoryTitle} hideDivider={hideDivider}/>;
         });
     }
 
-    function bottomReachedCallback() {
-        if (!videoCategoriesLoaded) {
-            return;
-        }
-        fetchVideosByCategory();
-    }
     return (
         <div className = "home-content" >
             <div className = "responsive-video-grid-container" >
-                <InfiniteScroll bottomReachedCallback={bottomReachedCallback} showLoader={showLoader}>
+                {/* <InfiniteScroll bottomReachedCallback={props.bottomReachedCallback} showLoader={props.showLoader}> */}
                     <VideoGrid title = "Trending" videos={trendingVideos} />
                     {categoryGrid}
-                </InfiniteScroll>
+                {/* </InfiniteScroll> */}
             </div> 
         </div>
     )

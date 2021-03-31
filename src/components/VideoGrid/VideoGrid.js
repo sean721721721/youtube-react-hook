@@ -11,7 +11,9 @@ const VideoGrid = (props) => {
       }
     const gridItems = props.videos.map(video => {
         return (<VideoPreview video={video}
-            key={video.id}/>);
+                              key={video.id}
+                              pathname='/watch'
+                              search={`?v=${video.id}`}/>);
     });
     const divider = props.hideDivider ? null : <Divider/>;
     return (

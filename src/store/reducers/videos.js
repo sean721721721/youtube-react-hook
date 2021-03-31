@@ -1,10 +1,14 @@
 import {MOST_POPULAR, MOST_POPULAR_BY_CATEGORY, VIDEO_CATEGORIES} from '../actions/video';
 import {SUCCESS} from '../actions';
+import {WATCH_DETAILS} from '../actions/watch';
+import {VIDEO_LIST_RESPONSE} from '../api/youtube-response-types';
+import {getSearchParam} from '../../services/url';
 
 const initialState = {
     byId: {},
     mostPopular: {},
     categories: {},
+    byCategory: {},
 };
 
 export default function videos(state = initialState, action) {
@@ -15,7 +19,10 @@ export default function videos(state = initialState, action) {
         case VIDEO_CATEGORIES[SUCCESS]:
             return reduceFetchVideoCategories(action.response, state);
         case MOST_POPULAR_BY_CATEGORY[SUCCESS]:
+            console.log(action)
             return reduceFetchMostPopularVideosByCategory(action.response, action.categories, state);
+        case WATCH_DETAILS[SUCCESS]:
+            return reduceWatchDetails(action.response, state);
         default:
             return state;
     }
@@ -59,10 +66,10 @@ function reduceFetchVideoCategories(response, prevState) {
 function reduceFetchMostPopularVideosByCategory(response, categories, prevState) {
     let videoMap = {};
     let byCategoryMap = {};
-
+    console.log(response);
     response.forEach((response, index) => {
         if (response.status === 400) return;
-
+        console.log(response)
         const categoryId = categories[index];
         const {byId, byCategory} = groupVideosByIdAndCategory(response.result);
         videoMap = {...videoMap, ...byId};
@@ -99,3 +106,25 @@ function groupVideosByIdAndCategory(response) {
 
     return {byId, byCategory};
 }
+
+function reduceWatchDetails(response, prevState) {
+    const videoDetailResponse = response.find(r => r.result.kind === VIDEO_LIST_RESPONSE);
+    const video = videoDetailResponse.result.items[0];
+
+    return {
+        ...prevState,
+        byId: {
+            ...prevState.byId,
+            [video.id]: video,
+        },
+    };
+}
+
+export const getChannelId = (state, location, name) => {
+    const videoId = getSearchParam(location, name);
+    const video = state.videos.byId[videoId];
+    if (video) {
+      return video.snippet.channelId;
+    }
+    return null;
+};

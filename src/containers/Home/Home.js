@@ -66,9 +66,10 @@ const Home = () => {
     const [categoryIndex, setCategoryIndex] = useState(0);
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
     const videoCategories = useSelector(state => {
-        return Object.keys(state.videos.categories);
+        return Object.keys(state.videos.categories || {});
     });
-    console.log(youtubeLibraryLoaded,videoCategories, categoryIndex);  
+    const videoCategoriesLoaded = useSelector(state => Object.keys(state.videos.categories || {}).length !== 0);
+
     const dispatch = useDispatch();
 
     useEffect(() => { 
@@ -76,26 +77,50 @@ const Home = () => {
         if (youtubeLibraryLoaded) {
             console.log('fetchMostPopularVideos');
             dispatch(fetchMostPopularVideos());
+            console.log('fetchVideoCategories')
+            dispatch(fetchVideoCategories());
         }
+
+        // console.log(`fetchMostPopularVideosByCategory`)
+        // const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
+        // console.log(`fetchMostPopularVideosByCategory ${categories}`)
             // dispatch(fetchVideoCategories());
     }, [youtubeLibraryLoaded]);
 
-    useEffect(() => { 
-        console.log('fetchVideoCategories')
-        fetchVideosByCategory();
-    }, [videoCategories]);
+    useEffect(() => {
+        console.log(videoCategories);
+        console.log(`fetchMostPopularVideosByCategory`)
+        const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
+        console.log(`fetchMostPopularVideosByCategory ${categories}`)
+        dispatch(fetchMostPopularVideosByCategory(categories));
+    }, []);
 
     function fetchVideosByCategory() {
         // const [categoryIndex, setCategoryIndex] = useState(0);
         const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
         fetchMostPopularVideosByCategory(categories);
-        setCategoryIndex(categoryIndex + 3);
+        // setCategoryIndex(categoryIndex + 3);
+    }
+
+    function bottomReachedCallback() {
+        if (!videoCategoriesLoaded) {
+            return;
+        }
+        fetchVideosByCategory();
+    }
+
+    function shouldShowLoader() {
+        if (videoCategoriesLoaded && videoCategoriesLoaded ) {
+            return categoryIndex < videoCategories.length;
+        }
     }
 
     return (
         <React.Fragment>
             <SideBar/>
-            <HomeContent/>
+            <HomeContent 
+                bottomReachedCallback={bottomReachedCallback}
+                showLoader={shouldShowLoader()}/>
         </React.Fragment>
     )
 }
