@@ -17,7 +17,6 @@ const WatchContent = (props) => {
         const relatedVideoIds = related ? related.items : [];
         const videos = state.videos.byId;
         if (relatedVideoIds) {
-            relatedVideoIds.map(videoId => console.log(videoId))
             return relatedVideoIds.map(item => videos[item.videoId])
                 .filter(video => video);
         }

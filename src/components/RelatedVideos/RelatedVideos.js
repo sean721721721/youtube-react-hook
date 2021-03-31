@@ -5,12 +5,12 @@ import NextUpVideo from './NextUpVideo/NextUpVideo';
 
 const RelatedVideos = (props) => {
     console.log(props)
-    if(props.videos || props.videos.length) {
+    if(!props.videos || !props.videos.length) {
         return <div className="related-videos"/>;
     }
 
     const nextUpVideo = props.videos[0];
-    const remaininVideos = props.videos.slilce(1);
+    const remaininVideos = props.videos.slice(1);
     console.log(remaininVideos)
     const relatedVideosPreviews = remaininVideos.map(relatedVideo => {
         return (<VideoPreview video={relatedVideo}
