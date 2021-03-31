@@ -5,7 +5,7 @@
     grid: 180px auto / 320px;
 
     &.horizontal {
-        grid: auto / 320px auto;
+        grid: auto / 168px auto;
         grid-column-gap: 4px;
         .video-info {
             grid-row: 1 / 2;
