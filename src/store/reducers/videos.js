@@ -7,6 +7,7 @@ const initialState = {
 };
 
 export default function videos(state = initialState, action) {
+    console.log(action.type);
     switch (action.type) {
         case MOST_POPULAR[SUCCESS]:
             return reduceFetchMostPopularVideos(action.response, state);
@@ -20,9 +21,9 @@ function reduceFetchMostPopularVideos(response, prevState) {
         acc[video.id] = video;
         return acc;
     }, {});
-
     let items = Object.keys(videoMap);
-    if (response.haOwnProperty('prevPageToken') && prevState.mostPopular) {
+    if (response.hasOwnProperty('prevPageToken') && prevState.mostPopular) {
+        console.log(response.haOwnProperty('prevPageToken') && prevState.mostPopular)
         items = [...prevState.mostPopular.items, ...items];
     }
 

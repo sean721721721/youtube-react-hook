@@ -26,6 +26,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (this.props.youtubeLibraryLoaded) {
+        console.log(this.props)
       this.props.fetchMostPopularVideos();
     }
   }
@@ -45,6 +46,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const fetchMostPopularVideos = videoActions.mostPopular.request;
+  console.log(fetchMostPopularVideos)
   return bindActionCreators({fetchMostPopularVideos}, dispatch);
 }
 

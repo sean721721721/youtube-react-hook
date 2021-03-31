@@ -12,6 +12,8 @@ export function* watchMostPopularVideos() {
 }
 
 export function* fetchMostPopularVideos(amount, loadDescription, nextPageToken) {
+    console.log('fetch');
     const request = api.buildMostPopularVideosRequest.bind(null, amount, loadDescription, nextPageToken);
+    console.log(request);
     yield fecthEntity(request, videoActions.mostPopular);
 }
