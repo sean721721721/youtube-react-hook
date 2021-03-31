@@ -3,7 +3,7 @@ export function buildVideoCategoriesRequest() {
         '/youtube/v3/videoCategories',
         {
             'part': 'snippet',
-            'regionCode': 'US'
+            'regionCode': 'TW'
         }, null);
 }
 
@@ -68,18 +68,20 @@ function createResource(properties) {
     return resource;
 }
 
-export function buildMostPopularVideosRequest(amount = 12, loadDescription = false, nextPageToken) {
+export function buildMostPopularVideosRequest(amount = 12, loadDescription = false, nextPageToken, videoCategoryId = null) {
     let fields = 'nextPageToken,prevPageToken,items(contentDetails/duration,id,snippet(channelId,channelTitle,localized/title,publishedAt,thumbnails/medium,title),statistics/viewCount),pageInfo(totalResults)';
     if (loadDescription) {
         fields += ',items/snippet/description';
     }
     return buildApiRequest('GET',
-        '/youtube/v3/videos', {
+        '/youtube/v3/videos',
+        {
             part: 'snippet,statistics,contentDetails',
             chart: 'mostPopular',
             maxResults: amount,
-            regionCode: 'US',
+            regionCode: 'TW',
             pageToken: nextPageToken,
             fields,
+            videoCategoryId,
         }, null);
 }
