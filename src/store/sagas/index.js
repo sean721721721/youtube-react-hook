@@ -10,7 +10,9 @@ export default function* () {
 }
 
 export function* fecthEntity(request, entity, ...args) {
+    console.log(request, entity, ...args);
     try {
+        console.log(request);
         const response = yield call(request);
         console.log(response.result, entity);
         yield put(entity.success(response.result, ...args));

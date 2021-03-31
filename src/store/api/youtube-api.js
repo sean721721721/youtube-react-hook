@@ -8,9 +8,12 @@ export function buildVideoCategoriesRequest() {
 }
 
 export function buildApiRequest(requestMethod, path, params, properties) {
+    console.log('enter buildApiRequest')
+    console.log(requestMethod, path, params, properties)
     params = removeEmptyParams(params);
     let request;
     if (properties) {
+        console.log('up')
         let resource = createResource(properties);
         request = window.gapi.client.request({
             'body': resource,
@@ -19,12 +22,15 @@ export function buildApiRequest(requestMethod, path, params, properties) {
             'params': params
         });
     } else {
+        console.log('down')
+        console.log(window.gapi)
         request = window.gapi.client.request({
             'method': requestMethod,
             'path': path,
             'params': params
         });
     }
+    console.log(request);
     return request;
 }
 
@@ -69,6 +75,7 @@ function createResource(properties) {
 }
 
 export function buildMostPopularVideosRequest(amount = 12, loadDescription = false, nextPageToken, videoCategoryId = null) {
+    console.log(amount, loadDescription, nextPageToken, videoCategoryId)
     let fields = 'nextPageToken,prevPageToken,items(contentDetails/duration,id,snippet(channelId,channelTitle,localized/title,publishedAt,thumbnails/medium,title),statistics/viewCount),pageInfo(totalResults)';
     if (loadDescription) {
         fields += ',items/snippet/description';

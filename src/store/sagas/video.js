@@ -5,6 +5,7 @@ import {REQUEST} from '../actions';
 import {fecthEntity, ignoreErrors} from './index';
 
 export function* fetchMostPopularVideos(amount, loadDescription, nextPageToken) {
+    console.log(amount, loadDescription, nextPageToken);
     const request = api.buildMostPopularVideosRequest.bind(null, amount, loadDescription, nextPageToken);
     yield fecthEntity(request, videoActions.mostPopular);
 }

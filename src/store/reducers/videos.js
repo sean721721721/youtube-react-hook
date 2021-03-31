@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export default function videos(state = initialState, action) {
-    console.log(action.type);
+    console.log(action, state);
     switch (action.type) {
         case MOST_POPULAR[SUCCESS]:
             return reduceFetchMostPopularVideos(action.response, state);
