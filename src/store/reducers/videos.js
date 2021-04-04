@@ -13,7 +13,6 @@ const initialState = {
 };
 
 export default function videos(state = initialState, action) {
-    console.log(action, state);
     switch (action.type) {
         case MOST_POPULAR[SUCCESS]:
             return reduceFetchMostPopularVideos(action.response, state);
@@ -137,10 +136,11 @@ function groupVideosByIdAndCategory(response) {
 }
 
 function reduceWatchDetails(responses, prevState) {
+    console.log(responses)
     const videoDetailResponse = responses.find(r => r.result.kind === VIDEO_LIST_RESPONSE);
     const video = videoDetailResponse.result.items[0];
     const relatedEntry = reduceRelatedVideosRequest(responses);
-
+    console.log(relatedEntry);
     return {
         ...prevState,
         byId: {

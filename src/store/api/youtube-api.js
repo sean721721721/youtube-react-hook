@@ -56,7 +56,7 @@ export function buildApiRequest(requestMethod, path, params, properties) {
             'params': params
         });
     }
-    // console.log(request);
+    console.log(request);
     return request;
 }
 

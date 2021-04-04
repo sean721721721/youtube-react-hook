@@ -19,6 +19,7 @@ export function* fetchWatchDetails(videoId, channelId) {
         yield put(watchActions.details.success(responses));
         yield call(fetchVideoDetails, responses);
     } catch (error) {
+        console.log(error);
         yield put(watchActions.details.failure(error));
     }
 }
@@ -26,8 +27,8 @@ export function* fetchWatchDetails(videoId, channelId) {
 
 export function* watchWatchDetails() {
     while(true) {
-        const {videoId} = yield take(watchActions.WATCH_DETAILS[REQUEST]);
-        yield fork(fetchWatchDetails, videoId);
+        const {videoId, channelId} = yield take(watchActions.WATCH_DETAILS[REQUEST]);
+        yield fork(fetchWatchDetails, videoId, channelId);
     }
 }
 

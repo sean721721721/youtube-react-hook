@@ -26,7 +26,6 @@ const Watch = (props) => {
     const videoId = getVideoId();
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
     // const channelId = useSelector(state => getChannelId(state, props.location, 'v'));
-    console.log(channelId)
     const dispatch = useDispatch();
     useEffect(() => {
         if (youtubeLibraryLoaded) {
@@ -35,7 +34,7 @@ const Watch = (props) => {
     }, [youtubeLibraryLoaded])
 
     function getVideoId() {
-        return getSearchParam(props.location.search, 'v');
+        return getSearchParam(props.location, 'v');
     }
     
     function fetchWatchContent() {
@@ -43,6 +42,7 @@ const Watch = (props) => {
         if(!videoId) {
             props.history.push('/');
         }
+        console.log(videoId, channelId)
         dispatch(fetchWatchDetails(videoId, channelId));
     }
     return (

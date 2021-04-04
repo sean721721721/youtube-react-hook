@@ -14,6 +14,7 @@ const WatchContent = (props) => {
     });
 
     const relatedVideos = useSelector(state => {
+        console.log(state);
         const related = state.videos.related[props.videoId];
         const relatedVideoIds = related ? related.items : [];
         const videos = state.videos.byId;
@@ -23,7 +24,7 @@ const WatchContent = (props) => {
         }
         return [];
     })
-    
+    console.log(relatedVideos)
 
     if (!props.videoId) {
         return <div/>
