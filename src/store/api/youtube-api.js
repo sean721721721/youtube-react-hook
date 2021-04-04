@@ -1,4 +1,5 @@
 export function buildChannelRequest(channelId) {
+    console.log('buildChannelRequest: ', channelId);
     return buildApiRequest('GET',
         '/youtube/v3/channels',
         {
@@ -56,7 +57,6 @@ export function buildApiRequest(requestMethod, path, params, properties) {
             'params': params
         });
     }
-    console.log(request);
     return request;
 }
 

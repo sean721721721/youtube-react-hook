@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './Watch.scss';
 import Video from '../../components/Video/Video';
 import RelatedVideos from '../../components/RelatedVideos/RelatedVideos';
 import VideoMetadata from '../../components/VideoMetadata/VideoMetadata';

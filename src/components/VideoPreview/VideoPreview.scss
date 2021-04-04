@@ -36,6 +36,8 @@
 
 .video-info {
     color: $text-color-dark;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     .video-preview-metadata-container {
         padding-top: 5px;
@@ -44,8 +46,6 @@
 
         .channel-title {
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
     }
 

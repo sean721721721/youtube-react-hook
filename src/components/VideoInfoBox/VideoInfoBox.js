@@ -3,13 +3,16 @@ import './VideoInfoBox.scss';
 import {Image, Button, Divider} from 'semantic-ui-react';
 import Linkify from 'react-linkify';  
 import {getPublishedAtDateString} from '../../services/date/date-format';
+import { getShortNumberString } from '../../services/number/number-format';
 
 const VideoInfoBox = (props) => {
     console.log(props);
     const [collapsed, setCollapsed] = useState(true);
-    if (!props.video) {
+    if (!props.video || !props.channel) {
         return <div/>;
     }
+
+
     const descriptionParagraphs = getDescriptionParagraphs();
     const {descriptionTextClass, buttonTitle} = getConfig();
     const publishedAtString = getPublishedAtDateString(props.video.snippet.publishedAt);
@@ -40,15 +43,27 @@ const VideoInfoBox = (props) => {
         };
     }
 
+    function getSubscriberButtonText() {
+        const {channel} = props;
+        const parsedSubscriberCount = Number(channel.statistics.subscriberCount);
+        const subscriberCount = getShortNumberString(parsedSubscriberCount);
+        return `Subscribe ${subscriberCount}`;
+    }
+
+    const {channel} = props;
+    const buttonText = getSubscriberButtonText();
+    const channelThumbnail = channel.snippet.thumbnails.medium.url;
+    const channelTitle = channel.snippet.title;
+
     return (
         <div>
             <div className="video-info-box">
-                <Image className="channel-image" src="http://via.placeholder.com/48x48" circular />
+                <Image className="channel-image" src={channelThumbnail} circular />
                 <div className="video-info">
-                    <div className="channel-name">Channel Name</div>
+                    <div className="channel-name">{channelTitle}</div>
                     <div className="video-publication-date">{publishedAtString}</div>
                 </div>
-                <Button color="youtube">91.5K Subscribe</Button>
+                <Button color="youtube">{buttonText}</Button>
                 <div className="video-description">
                     <div className={descriptionTextClass}>
                         {descriptionParagraphs}

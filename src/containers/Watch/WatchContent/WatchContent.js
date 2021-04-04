@@ -6,6 +6,7 @@ import Comments from '../../Comments/Comments';
 import RelatedVideos from '../../../components/RelatedVideos/RelatedVideos';
 import './WatchContent.scss';
 import { useSelector } from 'react-redux';
+import { getRelatedVideos } from '../../../store/reducers/videos';
 
 const WatchContent = (props) => {
     console.log(props);
@@ -13,18 +14,10 @@ const WatchContent = (props) => {
         return state.videos.byId[props.videoId];
     });
 
-    const relatedVideos = useSelector(state => {
-        console.log(state);
-        const related = state.videos.related[props.videoId];
-        const relatedVideoIds = related ? related.items : [];
-        const videos = state.videos.byId;
-        if (relatedVideoIds) {
-            return relatedVideoIds.map(item => videos[item.videoId])
-                .filter(video => video);
-        }
-        return [];
-    })
+    const relatedVideos = useSelector(state => getRelatedVideos(state, props.videoId));
     console.log(relatedVideos)
+
+    const channel = useSelector(state => state.channels.byId[props.channelId]);
 
     if (!props.videoId) {
         return <div/>
@@ -33,7 +26,7 @@ const WatchContent = (props) => {
         <div className='watch-grid'>
             <Video className='video' id={props.videoId}/>
             <VideoMetadata video={video}/>
-            <VideoInfoBox className='video-info-box' video={video}/>
+            <VideoInfoBox className='video-info-box' video={video} channel={channel}/>
             <Comments className='comments'/>
             <RelatedVideos className='relatedVideos' videos={relatedVideos}/>
         </div>

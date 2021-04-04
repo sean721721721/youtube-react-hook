@@ -168,6 +168,28 @@ export const getVideosByCategoryLoaded = (videosByCategory) => {
     return Object.keys(videosByCategory || {}).length;   
 }
 
+export const getRelatedVideos = (state, videoId) => {
+    const related = state.videos.related[videoId];
+    const relatedVideoIds = related ? related.items : [];
+    const videos = state.videos.byId;
+    if (relatedVideoIds) {
+        return relatedVideoIds.map(item => videos[item.videoId]).filter(video => video);
+    }
+    return [];
+}
+
+// const relatedVideos = useSelector(state => {
+//     console.log(state);
+//     const related = state.videos.related[props.videoId];
+//     const relatedVideoIds = related ? related.items : [];
+//     const videos = state.videos.byId;
+//     if (relatedVideoIds) {
+//         return relatedVideoIds.map(item => videos[item.videoId])
+//             .filter(video => video);
+//     }
+//     return [];
+// })
+
 export const getChannelId = (state, location, name) => {
     const videoId = getSearchParam(location, name);
     const video = state.videos.byId[videoId];
