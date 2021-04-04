@@ -1,33 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import VideoGrid from '../../../components/VideoGrid/VideoGrid';
 import {InfiniteScroll} from '../../../components/InfiniteScroll/InfiniteScroll';
 import './HomeContent.scss';
 import {useSelector} from 'react-redux';
+import {getVideosByCategory} from '../../../store/reducers/videos';
+
+const AMOUNT_TRENDING_VIDEOS = 12;
 
 const HomeContent = (props) => {
-    console.log(props);
-    const trendingVideos = useSelector(state => Object.values(state.videos.byId));
-
-    const videosByCategory = useSelector(state => {
-        console.log(state.videos);
-        let {byCategory, byId, categories} = state.videos;
-        byCategory = byCategory ? byCategory : {};
-        console.log(state.videos)
-        return Object.keys(byCategory).reduce((accumulator, categoryId) => {
-            console.log(byCategory)
-            const videoIds = byCategory[categoryId].items;
-            const categoryTitle = categories[categoryId];
-            accumulator[categoryTitle] = videoIds.map(videoId => byId[videoId]);
-            console.log(accumulator)
-            return accumulator;
-        }, {});
+    const trendingVideos = useSelector(state => {
+        return Object.values(state.videos.byId).slice(0, AMOUNT_TRENDING_VIDEOS);
     });
-    console.log(videosByCategory)
+    const videosByCategory = useSelector(state => {
+        const {byCategory, byId, categories} = state.videos;
+        return getVideosByCategory(byCategory, byId, categories);
+    });
     const categoryGrid = getVideoGridsForCategories();
-    console.log(categoryGrid)
     function getVideoGridsForCategories() {
         const categoryTitles = Object.keys(videosByCategory || {});
-        console.log(categoryTitles)
         return categoryTitles.map((categoryTitle,index) => {
             const videos = videosByCategory[categoryTitle];
             const hideDivider = index === categoryTitles.length - 1;
@@ -37,11 +27,11 @@ const HomeContent = (props) => {
 
     return (
         <div className = "home-content" >
-            <div className = "responsive-video-grid-container" >
-                {/* <InfiniteScroll bottomReachedCallback={props.bottomReachedCallback} showLoader={props.showLoader}> */}
-                    <VideoGrid title = "Trending" videos={trendingVideos} />
+            <div className ={`responsive-video-grid-container ${props.showLoader}`} >
+                <InfiniteScroll bottomReachedCallback={props.bottomReachedCallback} showLoader={props.showLoader}>
+                    <VideoGrid title="Trending" videos={trendingVideos} />
                     {categoryGrid}
-                {/* </InfiniteScroll> */}
+                </InfiniteScroll>
             </div> 
         </div>
     )

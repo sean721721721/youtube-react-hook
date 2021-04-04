@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import * as watchActions from '../../store/actions/watch';
 import {getSearchParam} from '../../services/url';
 import WatchContent from './WatchContent/WatchContent';
+import { getChannelId } from '../../store/reducers/videos';
 
 const fetchWatchDetails = watchActions.details.request;
 
@@ -24,6 +25,8 @@ const Watch = (props) => {
     })
     const videoId = getVideoId();
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
+    // const channelId = useSelector(state => getChannelId(state, props.location, 'v'));
+    console.log(channelId)
     const dispatch = useDispatch();
     useEffect(() => {
         if (youtubeLibraryLoaded) {
@@ -32,8 +35,7 @@ const Watch = (props) => {
     }, [youtubeLibraryLoaded])
 
     function getVideoId() {
-        const searchParams = new URLSearchParams(props.location.search);
-        return searchParams.get('v');
+        return getSearchParam(props.location.search, 'v');
     }
     
     function fetchWatchContent() {
@@ -51,7 +53,7 @@ const Watch = (props) => {
         //     <Comments className="comments"/>
         //     <RelatedVideos/>            
         // </div>
-        <WatchContent videoId={videoId}/>
+        <WatchContent videoId={videoId} channelId={channelId}/>
     )
 }
 

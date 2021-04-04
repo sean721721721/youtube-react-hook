@@ -20,7 +20,6 @@ export default function videos(state = initialState, action) {
         case VIDEO_CATEGORIES[SUCCESS]:
             return reduceFetchVideoCategories(action.response, state);
         case MOST_POPULAR_BY_CATEGORY[SUCCESS]:
-            console.log(action)
             return reduceFetchMostPopularVideosByCategory(action.response, action.categories, state);
         case WATCH_DETAILS[SUCCESS]:
             return reduceWatchDetails(action.response, state);
@@ -69,10 +68,8 @@ function reduceFetchVideoCategories(response, prevState) {
 function reduceFetchMostPopularVideosByCategory(response, categories, prevState) {
     let videoMap = {};
     let byCategoryMap = {};
-    console.log(response);
     response.forEach((response, index) => {
         if (response.status === 400) return;
-        console.log(response)
         const categoryId = categories[index];
         const {byId, byCategory} = groupVideosByIdAndCategory(response.result);
         videoMap = {...videoMap, ...byId};
@@ -155,6 +152,20 @@ function reduceWatchDetails(responses, prevState) {
             [video.id]: relatedEntry
         }
     };
+}
+
+export const getVideosByCategory = (videosByCategory, videosById, categories) => {
+    // console.log(videosByCategory, videosById, categories);
+    return Object.keys(videosByCategory || {}).reduce((accumulator, categoryId) => {
+        const videoIds = videosByCategory[categoryId].items;
+        const categoryTitle = categories[categoryId];
+        accumulator[categoryTitle] = videoIds.map(videoId => videosById[videoId]);
+            return accumulator;
+        }, {});
+};
+
+export const getVideosByCategoryLoaded = (videosByCategory) => {
+    return Object.keys(videosByCategory || {}).length;   
 }
 
 export const getChannelId = (state, location, name) => {

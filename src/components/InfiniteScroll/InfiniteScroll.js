@@ -6,6 +6,7 @@ import './InfiniteScroll.scss';
 export const InfiniteScroll = (props) => {
     return (
         <React.Fragment>
+            {props.children}
             <Waypoint onEnter={props.bottomReachedCallback}>
                 <div className="loader-container">
                     <Loader active={props.showLoader} inline="centered" />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SideBar from '../SideBar/SideBar';
 import HomeContent from './HomeContent/HomeContent';
 import './Home.scss';
@@ -6,7 +6,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import * as videoActions from "../../store/actions/video";
 import {bindActionCreators} from 'redux';
 import {getYoutubeLibraryLoaded} from '../../store/reducers/api';
-import {getVideoCategoryIds} from '../../store/reducers/videos';
+import {getVideoCategoryIds, getVideosByCategoryLoaded} from '../../store/reducers/videos';
 
 // class Home extends React.Component {
 //   constructor(props) {
@@ -68,12 +68,20 @@ const Home = () => {
     const videoCategories = useSelector(state => {
         return Object.keys(state.videos.categories || {});
     });
+    const prevVideoCategories = usePreviousVideoCategories(videoCategories);
     const videoCategoriesLoaded = useSelector(state => Object.keys(state.videos.categories || {}).length !== 0);
-
+    const videosByCategoryLoaded = useSelector(state => {
+        return getVideosByCategoryLoaded(state.videos.byCategory);
+    })
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (prevVideoCategories && (videoCategories.length !== prevVideoCategories.length)) {
+            fetchVideosByCategory();
+        }
+    });
+
     useEffect(() => { 
-        console.log(youtubeLibraryLoaded)
         if (youtubeLibraryLoaded) {
             console.log('fetchMostPopularVideos');
             dispatch(fetchMostPopularVideos());
@@ -87,22 +95,33 @@ const Home = () => {
             // dispatch(fetchVideoCategories());
     }, [youtubeLibraryLoaded]);
 
-    useEffect(() => {
-        console.log(videoCategories);
-        console.log(`fetchMostPopularVideosByCategory`)
-        const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
-        console.log(`fetchMostPopularVideosByCategory ${categories}`)
-        dispatch(fetchMostPopularVideosByCategory(categories));
-    }, []);
+    // useEffect(() => {
+    //     console.log(videoCategories);
+    //     console.log(`fetchMostPopularVideosByCategory`)
+    //     // if (videoCategories !==)
+    //     const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
+    //     console.log(`fetchMostPopularVideosByCategory ${categories}`)
+    //     dispatch(fetchMostPopularVideosByCategory(categories));
+    // }, []);
+
+    function usePreviousVideoCategories(categories) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = categories ? categories : [];
+        });
+        return ref.current;
+    }
 
     function fetchVideosByCategory() {
         // const [categoryIndex, setCategoryIndex] = useState(0);
         const categories = videoCategories.slice(categoryIndex, categoryIndex + 3);
-        fetchMostPopularVideosByCategory(categories);
-        // setCategoryIndex(categoryIndex + 3);
+        dispatch(fetchMostPopularVideosByCategory(categories));
+        setCategoryIndex(categoryIndex + 3);
     }
 
     function bottomReachedCallback() {
+        console.log('bottomReachedCallback')
+        console.log('videoCategoriesLoaded: ', videoCategoriesLoaded)
         if (!videoCategoriesLoaded) {
             return;
         }
@@ -110,9 +129,12 @@ const Home = () => {
     }
 
     function shouldShowLoader() {
-        if (videoCategoriesLoaded && videoCategoriesLoaded ) {
+        // console.log(videoCategoriesLoaded, videosByCategoryLoaded);
+        if (videoCategoriesLoaded && videosByCategoryLoaded ) {
+            console.log('categoryIndex < videoCategories.length: ', categoryIndex < videoCategories.length)
             return categoryIndex < videoCategories.length;
         }
+        return false;
     }
 
     return (

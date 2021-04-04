@@ -8,6 +8,7 @@ import './WatchContent.scss';
 import { useSelector } from 'react-redux';
 
 const WatchContent = (props) => {
+    console.log(props);
     const video = useSelector(state => {
         return state.videos.byId[props.videoId];
     });

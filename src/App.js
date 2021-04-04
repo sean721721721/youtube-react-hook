@@ -15,7 +15,6 @@ class App extends Component {
   render() {
     const {history, location} = this.props;
     console.log(this.props);
-    console.log(history, location);
     return (
       <AppLayout>
         <Switch>

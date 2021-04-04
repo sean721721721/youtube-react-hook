@@ -18,9 +18,7 @@ const VideoGrid = (props) => {
     const divider = props.hideDivider ? null : <Divider/>;
     return (
         <React.Fragment>
-        <div className="video-section">
             <VideoGridHeader title={props.title}/>
-        </div>
             <div className="video-grid">
                 {gridItems}
             </div>
