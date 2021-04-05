@@ -39,7 +39,6 @@ function reduceCommentThread(response, videoId, prevState) {
         nextPageToken: response.nextPageToken,
         ids: commentIds,
     };
-
     return {
         ...prevState,
         byId: {
@@ -51,4 +50,11 @@ function reduceCommentThread(response, videoId, prevState) {
             [videoId]: byVideoComment,
         }
     };
+}
+
+export const getCommentsForVideo = (comments, videoId) => {
+    const commentIds = comments.byVideo[videoId] ? comments.byVideo[videoId].ids : [];
+    const allComments = comments.byId;
+    console.log(commentIds);
+    return commentIds.map(commentId => allComments[commentId]);
 }

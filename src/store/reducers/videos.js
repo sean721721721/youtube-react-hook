@@ -198,3 +198,10 @@ export const getChannelId = (state, location, name) => {
     }
     return null;
 };
+
+export const getAmountComments = (video) => {
+    if (video) {
+        return video.statistics.commentCount;
+    }
+    return 0;
+}
