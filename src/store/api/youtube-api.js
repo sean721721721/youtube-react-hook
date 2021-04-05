@@ -1,3 +1,13 @@
+export function buildCommentThreadRequest(videoId, nextPageToken) {
+    return buildApiRequest('GET',
+        '/youtube/v3/commentThreads',
+        {
+            part: 'id,snippet',
+            pageToken: nextPageToken,
+            videoId,
+        }, null);
+}
+
 export function buildChannelRequest(channelId) {
     console.log('buildChannelRequest: ', channelId);
     return buildApiRequest('GET',

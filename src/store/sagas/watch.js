@@ -1,7 +1,7 @@
 import {fork, take, all, put, call} from 'redux-saga/effects';
 import * as watchActions from '../actions/watch';
 import {REQUEST} from '../actions';
-import {buildVideoDetailRequest, buildRelatedVideosRequest, buildChannelRequest} from '../api/youtube-api';
+import {buildVideoDetailRequest, buildRelatedVideosRequest, buildChannelRequest, buildCommentThreadRequest} from '../api/youtube-api';
 import {SEARCH_LIST_RESPONSE, VIDEO_LIST_RESPONSE} from '../api/youtube-response-types';
 
 export function* fetchWatchDetails(videoId, channelId) {
@@ -9,6 +9,7 @@ export function* fetchWatchDetails(videoId, channelId) {
     let requests = [
         buildVideoDetailRequest.bind(null, videoId),
         buildRelatedVideosRequest.bind(null, videoId),
+        buildCommentThreadRequest.bind(null, videoId),
     ]; 
 
     if (channelId) {
@@ -18,7 +19,7 @@ export function* fetchWatchDetails(videoId, channelId) {
 
     try {
         const responses = yield all(requests.map(fn => call(fn)));
-        yield put(watchActions.details.success(responses));
+        yield put(watchActions.details.success(responses, videoId));
         yield call(fetchVideoDetails, responses, channelId === null);
     } catch (error) {
         yield put(watchActions.details.failure(error));
