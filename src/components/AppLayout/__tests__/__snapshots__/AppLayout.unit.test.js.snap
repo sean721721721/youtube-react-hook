@@ -4,7 +4,7 @@ exports[`renders <AppLayout/> with children 1`] = `
 <div
   className="app-layout"
 >
-  <HeaderNav />
+  <withRouter(HeaderNav) />
   <div>
     Child
   </div>
@@ -23,7 +23,7 @@ exports[`renders <AppLayout/> with one child 1`] = `
 <div
   className="app-layout"
 >
-  <HeaderNav />
+  <withRouter(HeaderNav) />
   <div>
     Child 1
   </div>
@@ -34,6 +34,6 @@ exports[`renders empty <AppLayout/> 1`] = `
 <div
   className="app-layout"
 >
-  <HeaderNav />
+  <withRouter(HeaderNav) />
 </div>
 `;

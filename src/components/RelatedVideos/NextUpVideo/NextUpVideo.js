@@ -4,6 +4,9 @@ import {Checkbox, Divider} from 'semantic-ui-react';
 import VideoPreview from '../../VideoPreview/VIdeoPreview';
 
 const NextUpVideo = (props) => {
+    if(!props.videos || !props.videos.length) {
+        return <div/>;
+    }
     return (
         <React.Fragment>
             <div className="next-up-container">

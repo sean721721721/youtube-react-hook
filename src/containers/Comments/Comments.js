@@ -4,13 +4,12 @@ import AddComments from './AddComment/AddComment';
 import Comment from './Comment/Comment';
 
 const Comments = (props) => {
-    const comments = props.comments.map((comment) => {
-        return <Comment comment={comment} key={comment.id}/>
-    })
-
     if (!props.comments) {
         return <div/>;
     }
+    const comments = props.comments.map((comment) => {
+        return <Comment comment={comment} key={comment.id}/>
+    })
     return (
         <div>
             <CommentsHeader amountComments={props.amountComments}/>

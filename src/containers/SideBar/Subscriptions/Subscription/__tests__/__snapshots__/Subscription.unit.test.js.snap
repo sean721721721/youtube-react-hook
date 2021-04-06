@@ -9,7 +9,7 @@ exports[`Subscription renders broadcasting subscription 1`] = `
       <Image
         as="img"
         avatar={true}
-        scr="http://via.placeholder.com/28x28"
+        src="http://via.placeholder.com/28x28"
         ui={true}
       />
       <span>
@@ -33,7 +33,7 @@ exports[`Subscription renders empty subscription 1`] = `
       <Image
         as="img"
         avatar={true}
-        scr="http://via.placeholder.com/28x28"
+        src="http://via.placeholder.com/28x28"
         ui={true}
       />
       <span />
@@ -51,7 +51,7 @@ exports[`Subscription renders non-broadcasting subscription with new videos 1`] 
       <Image
         as="img"
         avatar={true}
-        scr="http://via.placeholder.com/28x28"
+        src="http://via.placeholder.com/28x28"
         ui={true}
       />
       <span>
@@ -63,24 +63,6 @@ exports[`Subscription renders non-broadcasting subscription with new videos 1`] 
     >
       4
     </span>
-  </div>
-</MenuItem>
-`;
-
-exports[`renders Subscriptions 1`] = `
-<MenuItem>
-  <div
-    className="subscription"
-  >
-    <div>
-      <Image
-        as="img"
-        avatar={true}
-        scr="http://via.placeholder.com/28x28"
-        ui={true}
-      />
-      <span />
-    </div>
   </div>
 </MenuItem>
 `;

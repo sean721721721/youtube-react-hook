@@ -3,16 +3,5 @@
 exports[`RelateVideos renders 1`] = `
 <div
   className="related-videos"
->
-  <NextUpVideo />
-  <VideoPreview
-    horizontal={true}
-  />
-  <VideoPreview
-    horizontal={true}
-  />
-  <VideoPreview
-    horizontal={true}
-  />
-</div>
+/>
 `;
