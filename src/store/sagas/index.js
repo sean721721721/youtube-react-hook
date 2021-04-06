@@ -1,4 +1,5 @@
 import {all, call, put, fork} from 'redux-saga/effects';
+import { watchCommentThread } from './comment';
 import { watchMostPopularVideosByCategory, watchVideoCategories, watchMostPopularVideos } from './video';
 import {watchWatchDetails} from './watch';
 
@@ -7,11 +8,12 @@ export default function* () {
         fork(watchMostPopularVideos),
         fork(watchVideoCategories),
         fork(watchMostPopularVideosByCategory),
-        fork(watchWatchDetails)
+        fork(watchWatchDetails),
+        fork(watchCommentThread),
     ]);
 }
 
-export function* fecthEntity(request, entity, ...args) {
+export function* fetchEntity(request, entity, ...args) {
     try {
         const response = yield call(request);
         yield put(entity.success(response.result, ...args));

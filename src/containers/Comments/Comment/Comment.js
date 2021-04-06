@@ -5,15 +5,16 @@ import Rating from '../../../components/Rating/Rating';
 
 const Comment = (props) => {
     const topLevelComment = props.comment.snippet.topLevelComment;
-    const {authorPropfileImageUrl, authorDisplayName, textOriginal} = topLevelComment.snippet;
+    const {authorProfileImageUrl, authorDisplayName, textOriginal} = topLevelComment.snippet;
     const likeCount = topLevelComment.snippet.likeCount;
-    console.log(authorPropfileImageUrl)
+
     if (!props.comment) {
         return <div/>
     }
+    
     return (
         <div className="comment">
-            <Image className="user-image" src={authorPropfileImageUrl} circular />
+            <Image className="user-image" src={authorProfileImageUrl} circular />
             <div>
                 <div className="user-name">{authorDisplayName}</div>
                 <span>{textOriginal}</span>

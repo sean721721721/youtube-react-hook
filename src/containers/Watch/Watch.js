@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
-import Video from '../../components/Video/Video';
-import RelatedVideos from '../../components/RelatedVideos/RelatedVideos';
-import VideoMetadata from '../../components/VideoMetadata/VideoMetadata';
-import VideoInfoBox from '../../components/VideoInfoBox/VideoInfoBox';
-import Comments from '../Comments/Comments';
 import {useDispatch, useSelector} from 'react-redux';
 import * as watchActions from '../../store/actions/watch';
 import {getSearchParam} from '../../services/url';
 import WatchContent from './WatchContent/WatchContent';
-import { getChannelId } from '../../store/reducers/videos';
+import { getCommentNextPageToken } from '../../store/reducers/comments';
+import * as commentActions from '../../store/actions/comment';
 
 const fetchWatchDetails = watchActions.details.request;
+const fetchCommentThread = commentActions.thread.requset;
 
 const Watch = (props) => {
     console.log(props);
@@ -24,7 +21,10 @@ const Watch = (props) => {
     })
     const videoId = getVideoId();
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
-    // const channelId = useSelector(state => getChannelId(state, props.location, 'v'));
+    const nextPageToken = useSelector(state => {
+        const comment = state.comments.byVideo[videoId];
+        return getCommentNextPageToken(comment);
+    })
     const dispatch = useDispatch();
     useEffect(() => {
         if (youtubeLibraryLoaded) {
@@ -44,6 +44,13 @@ const Watch = (props) => {
         console.log(videoId, channelId)
         dispatch(fetchWatchDetails(videoId, channelId));
     }
+
+    function fetchMoreComments() {
+        if (nextPageToken) {
+            console.log('fetchCommentThread');
+            dispatch(fetchCommentThread(videoId, nextPageToken));
+        }
+    }
     return (
         // <div className="watch-grid">
         //     <Video className="video" id="-7fuHEEmEjs" />
@@ -52,7 +59,11 @@ const Watch = (props) => {
         //     <Comments className="comments"/>
         //     <RelatedVideos/>            
         // </div>
-        <WatchContent videoId={videoId} channelId={channelId}/>
+        <WatchContent videoId={videoId} 
+                      channelId={channelId}
+                      bottomReachedCallback={fetchMoreComments}
+                      nextPageToken={nextPageToken}
+        />
     )
 }
 

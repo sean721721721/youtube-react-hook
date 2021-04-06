@@ -1,4 +1,5 @@
 import {SUCCESS} from '../actions';
+import { COMMENT_THREAD } from '../actions/comment';
 import {WATCH_DETAILS} from '../actions/watch';
 import {COMMENT_THREAD_LIST_RESPONSE} from '../api/youtube-response-types';
 
@@ -11,6 +12,8 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case WATCH_DETAILS[SUCCESS]:
             return reduceWatchDetails(action.response, action.videoId, state);
+        case COMMENT_THREAD[SUCCESS]:
+            return reduceCommentThread(action.response, action.videoId, state);
         default:
             return state;
     }
@@ -57,4 +60,8 @@ export const getCommentsForVideo = (comments, videoId) => {
     const allComments = comments.byId;
     console.log(commentIds);
     return commentIds.map(commentId => allComments[commentId]);
+}
+
+export const getCommentNextPageToken = (comment) => {
+    return comment ? comment.nextPageToken : null;
 }
