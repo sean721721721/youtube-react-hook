@@ -5,7 +5,7 @@ import {REQUEST} from '../actions';
 import {fetchEntity, ignoreErrors} from './index';
 
 export function* fetchMostPopularVideos(amount, loadDescription, nextPageToken) {
-    // console.log(amount, loadDescription, nextPageToken);
+    console.log(amount, loadDescription, nextPageToken);
     const request = api.buildMostPopularVideosRequest.bind(null, amount, loadDescription, nextPageToken);
     yield fetchEntity(request, videoActions.mostPopular);
 }

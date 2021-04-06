@@ -9,6 +9,7 @@ const AMOUNT_TRENDING_VIDEOS = 12;
 
 const HomeContent = (props) => {
     const trendingVideos = useSelector(state => {
+        console.log(state);
         return Object.values(state.videos.byId).slice(0, AMOUNT_TRENDING_VIDEOS);
     });
     const videosByCategory = useSelector(state => {

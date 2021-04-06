@@ -1,4 +1,4 @@
-import {MOST_POPULAR, MOST_POPULAR_BY_CATEGORY, VIDEO_CATEGORIES} from '../actions/video';
+import {mostPopular, MOST_POPULAR, MOST_POPULAR_BY_CATEGORY, VIDEO_CATEGORIES} from '../actions/video';
 import {SUCCESS} from '../actions';
 import {VIDEO_LIST_RESPONSE, SEARCH_LIST_RESPONSE} from '../api/youtube-response-types';
 import {getSearchParam} from '../../services/url';
@@ -36,7 +36,6 @@ function reduceFetchMostPopularVideos(response, prevState) {
     }, {});
     let items = Object.keys(videoMap);
     if (response.hasOwnProperty('prevPageToken') && prevState.mostPopular) {
-        console.log(response.haOwnProperty('prevPageToken') && prevState.mostPopular)
         items = [...prevState.mostPopular.items, ...items];
     }
 
@@ -152,6 +151,26 @@ function reduceWatchDetails(responses, prevState) {
             [video.id]: relatedEntry
         }
     };
+}
+
+export const getMostPopularVideos = (state) => {
+    const videosById = state.videos.byId;
+    const mostPopular = state.videos.mostPopular;
+
+    if (!mostPopular || !mostPopular.items) {
+        return [];
+    }
+    return mostPopular.items.map(videoId => videosById[videoId]);
+}
+
+export const getMostPopularVideosNextPageToken = (state) => {
+    return state.videos.mostPopular.nextPageToken;
+}
+
+export const allMostPopularVideosLoaded = (state) => {
+    const mostPopular = state.videos.mostPopular;
+    const amountFetchedItems = mostPopular.items ? mostPopular.items.length : 0;
+    return amountFetchedItems === mostPopular.totalResults;
 }
 
 export const getVideosByCategory = (videosByCategory, videosById, categories) => {

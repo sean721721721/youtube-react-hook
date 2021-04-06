@@ -16,8 +16,10 @@ export default function* () {
 export function* fetchEntity(request, entity, ...args) {
     try {
         const response = yield call(request);
+        console.log(response)
         yield put(entity.success(response.result, ...args));
     } catch(error) {
+        console.log(error);
         yield put(entity.failure(error, ...args));
     }
 }
