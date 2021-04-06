@@ -4,12 +4,12 @@ import AppLayout from './components/AppLayout/AppLayout';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import Watch from './containers/Watch/Watch';
 import Trending from './containers/Trending/Trending';
+import Search from './containers/Search/Search';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {youtubeLibraryLoaded} from './store/actions/api';
 import {key} from './config';
-// import Trending from './containers/Trending/Trending';
-// import Search from './containers/Search/Search';
+
 
 const API_KEY = key;
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
       <AppLayout>
         <Switch>
           <Route path="/feed/trending" component={Trending}/>
-          {/* <Route path="/results" render={() => <Search key={this.props.location.key}/>}/> */}
+          <Route path="/results" render={() => <Search key={this.props.location.key}/>}/>
           <Route path="/watch" render={() => <Watch history={history} location={location} key={this.props.location.key}/>}/>
           <Route path="/" component={Home}/>
         </Switch>

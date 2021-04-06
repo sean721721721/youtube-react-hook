@@ -1,10 +1,21 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import {Image, Menu, Form, Input, Icon} from 'semantic-ui-react';
 import './HeaderNav.scss';
 import logo from '../../assets/images/logo.jpg';
 
-const HeaderNav = () => {
+const HeaderNav = (props) => {
+    const [query, setQuery] = useState('');
+
+    function onInputChange(event) {
+        setQuery(event.target.value);
+    }
+
+    function onSubmit() {
+        const escapedSearchQuery = encodeURI(query);
+        props.history.push(`/results?search_query=${escapedSearchQuery}`);
+    }
+
     return (
         <Menu borderless className="top-menu" fixed="top">
             <Menu.Item header className="logo">
@@ -12,11 +23,13 @@ const HeaderNav = () => {
             </Menu.Item>
             <Menu.Menu className="nav-container">
                 <Menu.Item className="search-input">
-                    <Form>
+                    <Form onSubmit={onSubmit}>
                         <Form.Field>
                             <Input placeholder="search"
                                    size="small"
                                    action="Go"
+                                   value={query}
+                                   onChange={onInputChange}
                             />
                         </Form.Field>
                     </Form>
@@ -43,4 +56,4 @@ const HeaderNav = () => {
     )
 }
 
-export default HeaderNav;
+export default withRouter(HeaderNav);

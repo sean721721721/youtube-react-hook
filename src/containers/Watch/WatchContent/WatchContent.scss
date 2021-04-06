@@ -33,3 +33,10 @@
         grid-row: 1 / span 4;
     }
 }
+
+@media(max-width: 1754px) {
+    .watch-grid {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
