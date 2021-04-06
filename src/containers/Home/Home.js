@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SideBar from '../SideBar/SideBar';
 import HomeContent from './HomeContent/HomeContent';
-import './Home.scss';
 import {connect, useDispatch, useSelector} from "react-redux";
 import * as videoActions from "../../store/actions/video";
 import {bindActionCreators} from 'redux';
