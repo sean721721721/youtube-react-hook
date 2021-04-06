@@ -28,7 +28,7 @@ const HomeContent = (props) => {
 
     return (
         <div className = "home-content" >
-            <div className ={`responsive-video-grid-container ${props.showLoader}`} >
+            <div className ='responsive-video-grid-container' >
                 <InfiniteScroll bottomReachedCallback={props.bottomReachedCallback} showLoader={props.showLoader}>
                     <VideoGrid title="Trending" videos={trendingVideos} />
                     {categoryGrid}
