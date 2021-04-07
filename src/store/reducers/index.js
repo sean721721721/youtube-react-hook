@@ -4,6 +4,7 @@ import videosReducer from './videos';
 import channelsReducer from './channels';
 import commentsReducer from './comments';
 import searchReducer from './search';
+import historyReducer from './history';
 
 export default combineReducers({
     api: apiReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     channels: channelsReducer,
     comments: commentsReducer,
     search: searchReducer,
+    history: historyReducer,
 });

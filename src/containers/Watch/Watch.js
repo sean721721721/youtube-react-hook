@@ -25,6 +25,7 @@ const Watch = (props) => {
         return getCommentNextPageToken(comment);
     })
     const dispatch = useDispatch();
+
     useEffect(() => {
         if (youtubeLibraryLoaded) {
             fetchWatchContent(); 

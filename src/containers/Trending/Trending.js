@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import VideoPreview from '../../components/VideoPreview/VIdeoPreview';
-import SideBar from '../SideBar/SideBar';
 import * as videoActions from '../../store/actions/video';
 import {
     getMostPopularVideos,
@@ -8,7 +6,6 @@ import {
     getMostPopularVideosNextPageToken,
 } from '../../store/reducers/videos';
 import { useDispatch, useSelector } from 'react-redux';
-import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll';
 import VideoList from '../../components/VideoList/VideoList';
 
 const fetchMostPopularVideos = videoActions.mostPopular.request;

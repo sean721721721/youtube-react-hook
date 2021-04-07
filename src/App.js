@@ -9,6 +9,7 @@ import {bindActionCreators} from 'redux';
 import {connect, useDispatch} from 'react-redux';
 import {youtubeLibraryLoaded} from './store/actions/api';
 import {key} from './config';
+import History from './containers/History/History';
 
 
 const API_KEY = key;
@@ -38,6 +39,7 @@ const App = (props) => {
     return (
         <AppLayout>
             <Switch>
+                <Route path="/feed/history" component={History}/>
                 <Route path="/feed/trending" component={Trending}/>
                 <Route path="/results" render={() => <Search key={location.key}/>}/>
                 <Route path="/watch" render={() => <Watch history={history} location={location} key={location.key}/>}/>

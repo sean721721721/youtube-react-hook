@@ -14,7 +14,7 @@ const SideBar = () => {
             <SideBarItem label="Followers" icon="spy" />
             <Divider/>
             <SideBarHeader title="Library" />
-            <SideBarItem label="History" icon="history" />
+            <SideBarItem path="/feed/history" label="History" icon="history" />
             <SideBarItem label="Watch later" icon="clock" />
             <SideBarItem label="Liked videos" icon="thumbs up" />
             <Divider/>
