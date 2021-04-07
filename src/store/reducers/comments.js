@@ -58,7 +58,6 @@ function reduceCommentThread(response, videoId, prevState) {
 export const getCommentsForVideo = (comments, videoId) => {
     const commentIds = comments.byVideo[videoId] ? comments.byVideo[videoId].ids : [];
     const allComments = comments.byId;
-    console.log(commentIds);
     return commentIds.map(commentId => allComments[commentId]);
 }
 

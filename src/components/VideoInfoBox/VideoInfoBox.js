@@ -6,7 +6,6 @@ import {getPublishedAtDateString} from '../../services/date/date-format';
 import { getShortNumberString } from '../../services/number/number-format';
 
 const VideoInfoBox = (props) => {
-    console.log(props);
     const [collapsed, setCollapsed] = useState(true);
     if (!props.video || !props.channel) {
         return <div/>;

@@ -20,7 +20,6 @@ export function* fetchEntity(request, entity, ...args) {
         const response = yield call(request);
         yield put(entity.success(response.result, ...args));
     } catch(error) {
-        console.log(error);
         yield put(entity.failure(error, ...args));
     }
 }

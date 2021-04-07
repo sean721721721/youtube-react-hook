@@ -5,7 +5,6 @@ import * as api from '../api/youtube-api';
 import {fetchEntity} from './index';
 
 export function* fetchCommentThread(videoId, nextPageToken) {
-    console.log(videoId, nextPageToken)
     const request = api.buildCommentThreadRequest.bind(null, videoId, nextPageToken);
     yield fetchEntity(request, commentActions.thread, videoId);
 }

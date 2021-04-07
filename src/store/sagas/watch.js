@@ -5,7 +5,6 @@ import {buildVideoDetailRequest, buildRelatedVideosRequest, buildChannelRequest,
 import {SEARCH_LIST_RESPONSE, VIDEO_LIST_RESPONSE} from '../api/youtube-response-types';
 
 export function* fetchWatchDetails(videoId, channelId) {
-    console.log(`fetchWatchDetails:  ${videoId} ${channelId}`);
     let requests = [
         buildVideoDetailRequest.bind(null, videoId),
         buildRelatedVideosRequest.bind(null, videoId),
@@ -13,7 +12,6 @@ export function* fetchWatchDetails(videoId, channelId) {
     ]; 
 
     if (channelId) {
-        console.log('buildChannelRequest');
         requests.push(buildChannelRequest.bind(null, channelId));
     }
 
@@ -30,13 +28,11 @@ export function* fetchWatchDetails(videoId, channelId) {
 export function* watchWatchDetails() {
     while(true) {
         const {videoId, channelId} = yield take(watchActions.WATCH_DETAILS[REQUEST]);
-        console.log(videoId, channelId)
         yield fork(fetchWatchDetails, videoId, channelId);
     }
 }
 
 function* fetchVideoDetails(responses, shouldFetchChannelInfo) {
-    console.log('fetchVideoDetails', shouldFetchChannelInfo);
     const searchListResponse = responses.find(response => response.result.kind === SEARCH_LIST_RESPONSE);
     const relatedVideoIds = searchListResponse.result.items.map(relatedVideo => relatedVideo.id.videoId);
 
@@ -51,7 +47,6 @@ function* fetchVideoDetails(responses, shouldFetchChannelInfo) {
         const videoDetailResponse = responses.find(response => response.result.kind === VIDEO_LIST_RESPONSE);
         const videos = videoDetailResponse.result.items;
         if (videos && videos.length) {
-            console.log(videos[0].snippet.channelId);
             requests.push(buildChannelRequest.bind(null, videos[0].snippet.channelId));
         }
     }

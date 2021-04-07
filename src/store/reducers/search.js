@@ -14,7 +14,6 @@ export default function(state = {}, action) {
 
 function reduceSearchForVideos(response, searchQuery, prevState) {
     let searchResults = response.items.map(item => ({...item, id: item.id.videoId}));
-    console.log(searchResults);
     if (prevState.query === searchQuery) {
         const prevResults = prevState.results || [];
         searchResults = prevResults.concat(searchResults);

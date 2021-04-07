@@ -7,7 +7,6 @@ const initialState = {
 }
 
 export default function (state = initialState, action) {
-    console.log(action.type, state);
     switch (action.type) {
         case WATCH_DETAILS[SUCCESS]:
             return reduceWatchDetails(action.response, state);
@@ -19,13 +18,11 @@ export default function (state = initialState, action) {
 }
 
 function reduceWatchDetails(responses, prevState) {
-    console.log(responses);
     const channelResponse = responses.find(response => {
         return response.result.kind === CHANNEL_LIST_RESPONSE;
     });
     let channels = {};
     if (channelResponse && channelResponse.result.items) {
-        console.log(channelResponse)
         const channel = channelResponse.result.items[0];
         channels[channel.id] = channel;
     }
@@ -39,17 +36,13 @@ function reduceWatchDetails(responses, prevState) {
 }
 
 function reduceVideoDetails(responses, prevState) {
-    console.log(responses);
     const channelResponse = responses.find(response => {
         return response.result.kind === CHANNEL_LIST_RESPONSE;
     });
     let channelEntry = {};
     if (channelResponse && channelResponse.result.items) {
-        console.log(channelResponse);
         const channel = channelResponse.result.items[0];
-        channelEntry = {
-            [channel.id]: channel,
-        }
+        channelEntry = { [channel.id]: channel };
     }
 
     return {

@@ -21,7 +21,6 @@ export function buildCommentThreadRequest(videoId, nextPageToken) {
 }
 
 export function buildChannelRequest(channelId) {
-    console.log('buildChannelRequest: ', channelId);
     return buildApiRequest('GET',
         '/youtube/v3/channels',
         {

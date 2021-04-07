@@ -16,7 +16,6 @@ const Search = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('first useEffect')
         if (!getSearchQuery()) {
             props.history.push('/');
         }
@@ -24,7 +23,6 @@ const Search = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log('seconde useEffect: ', youtubeApiLoaded)
         if (youtubeApiLoaded) {
             searching();
         }
@@ -37,13 +35,11 @@ const Search = (props) => {
     function searching() {
         const searchQuery = getSearchQuery();
         if (youtubeApiLoaded) {
-            console.log('searchForVideos', searchQuery);
             dispatch(searchForVideos(searchQuery));
         }
     }
 
     function bottomReachedCallback() {
-        console.log('nextPageToken: ', nextPageToken)
         if (nextPageToken) {
             dispatch(searchForVideos(getSearchQuery(), nextPageToken, 25));
         }

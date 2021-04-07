@@ -19,7 +19,6 @@ const Trending = () => {
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
     const allMostPopularVideosIsLoaded = useSelector(state => allMostPopularVideosLoaded(state));
     const nextPageToken = useSelector(state => getMostPopularVideosNextPageToken(state));
-    console.log(videos, youtubeLibraryLoaded, allMostPopularVideosIsLoaded, nextPageToken);
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -31,7 +30,6 @@ const Trending = () => {
     }, [youtubeLibraryLoaded]);
 
     function fetchTrendingVideos() {
-        console.log('fetchTrendingVideos: ', youtubeLibraryLoaded);
         if (youtubeLibraryLoaded) {
             dispatch(fetchMostPopularVideos(20, true));
         }
@@ -42,8 +40,6 @@ const Trending = () => {
     }
 
     function fetchMoreVideos() {
-        console.log('fetchMoreVideos')
-        console.log(youtubeLibraryLoaded, nextPageToken)
         if (youtubeLibraryLoaded && nextPageToken) {
             dispatch(fetchMostPopularVideos(12, true, nextPageToken));
         }

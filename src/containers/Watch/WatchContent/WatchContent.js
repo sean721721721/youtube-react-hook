@@ -11,7 +11,6 @@ import { getCommentNextPageToken, getCommentsForVideo } from '../../../store/red
 import { InfiniteScroll } from '../../../components/InfiniteScroll/InfiniteScroll';
 
 const WatchContent = (props) => {
-    console.log(props);
     const video = useSelector(state => {
         return state.videos.byId[props.videoId];
     });

@@ -135,11 +135,9 @@ function groupVideosByIdAndCategory(response) {
 }
 
 function reduceWatchDetails(responses, prevState) {
-    console.log(responses)
     const videoDetailResponse = responses.find(r => r.result.kind === VIDEO_LIST_RESPONSE);
     const video = videoDetailResponse.result.items[0];
     const relatedEntry = reduceRelatedVideosRequest(responses);
-    console.log(relatedEntry);
     return {
         ...prevState,
         byId: {
@@ -174,7 +172,6 @@ export const allMostPopularVideosLoaded = (state) => {
 }
 
 export const getVideosByCategory = (videosByCategory, videosById, categories) => {
-    // console.log(videosByCategory, videosById, categories);
     return Object.keys(videosByCategory || {}).reduce((accumulator, categoryId) => {
         const videoIds = videosByCategory[categoryId].items;
         const categoryTitle = categories[categoryId];
@@ -196,18 +193,6 @@ export const getRelatedVideos = (state, videoId) => {
     }
     return [];
 }
-
-// const relatedVideos = useSelector(state => {
-//     console.log(state);
-//     const related = state.videos.related[props.videoId];
-//     const relatedVideoIds = related ? related.items : [];
-//     const videos = state.videos.byId;
-//     if (relatedVideoIds) {
-//         return relatedVideoIds.map(item => videos[item.videoId])
-//             .filter(video => video);
-//     }
-//     return [];
-// })
 
 export const getChannelId = (state, location, name) => {
     const videoId = getSearchParam(location, name);

@@ -10,7 +10,6 @@ const fetchWatchDetails = watchActions.details.request;
 const fetchCommentThread = commentActions.thread.requset;
 
 const Watch = (props) => {
-    console.log(props);
     const channelId = useSelector(state => {
         const videoId = getSearchParam(props.location, 'v')
         const video = state.videos.byId[videoId];
@@ -41,24 +40,15 @@ const Watch = (props) => {
         if(!videoId) {
             props.history.push('/');
         }
-        console.log(videoId, channelId)
         dispatch(fetchWatchDetails(videoId, channelId));
     }
 
     function fetchMoreComments() {
         if (nextPageToken) {
-            console.log('fetchCommentThread');
             dispatch(fetchCommentThread(videoId, nextPageToken));
         }
     }
     return (
-        // <div className="watch-grid">
-        //     <Video className="video" id="-7fuHEEmEjs" />
-        //     <VideoMetadata viewCount={1000}/>
-        //     <VideoInfoBox className="video-info-box" collapsed={true} />
-        //     <Comments className="comments"/>
-        //     <RelatedVideos/>            
-        // </div>
         <WatchContent videoId={videoId} 
                       channelId={channelId}
                       bottomReachedCallback={fetchMoreComments}

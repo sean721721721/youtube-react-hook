@@ -5,11 +5,9 @@ import VideoPreview from '../VideoPreview/VIdeoPreview';
 import './VideoList.scss';
 
 const VideoList = (props) => {
-    console.log(props);
     const videoPreviews = getVideoPreviews();
 
     function getVideoPreviews() {
-        console.log(props.videos)
         if (!props.videos || !props.videos.length) {
             return null;
         }
