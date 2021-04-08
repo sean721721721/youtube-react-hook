@@ -41,28 +41,12 @@ const Watch = (props) => {
         dispatch(fetchWatchDetails(videoId, channelId));
     }
 
-    // function fetchMoreComments() {
-    //     if (nextPageToken) {
-    //         console.log('fetchCommentThread')
-    //         dispatch(fetchCommentThread(videoId, nextPageToken));
-    //     }
-    // }
-    function fetchMoreComments() {
-        if (nextPageToken) {
-            console.log('fetchCommentThread')
-            dispatch(fetchCommentThread(videoId, nextPageToken));
-        }
-    }
-
     const memoizedFetchMoreComments = useCallback(
         () => {
             if (nextPageToken) {
-                console.log('fetchCommentThread')
                 dispatch(fetchCommentThread(videoId, nextPageToken));
             }
-        },
-        [videoId, nextPageToken],
-    )
+        }, [videoId, nextPageToken]);
 
     return (
         <WatchContent videoId={videoId} 
