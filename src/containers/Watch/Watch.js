@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import * as watchActions from '../../store/actions/watch';
 import {getSearchParam} from '../../services/url';
 import WatchContent from './WatchContent/WatchContent';
@@ -10,15 +10,12 @@ const fetchWatchDetails = watchActions.details.request;
 const fetchCommentThread = commentActions.thread.requset;
 
 const Watch = (props) => {
+    const videoId = getVideoId();
     const channelId = useSelector(state => {
         const videoId = getSearchParam(props.location, 'v')
         const video = state.videos.byId[videoId];
-        if (video) {
-            return video.snippet.channelId;
-        }
-        return null;
+        return video ? video.snippet.channelId : null;
     })
-    const videoId = getVideoId();
     const youtubeLibraryLoaded = useSelector(state => state.api.libraryLoaded);
     const nextPageToken = useSelector(state => {
         const comment = state.comments.byVideo[videoId];
@@ -44,15 +41,33 @@ const Watch = (props) => {
         dispatch(fetchWatchDetails(videoId, channelId));
     }
 
+    // function fetchMoreComments() {
+    //     if (nextPageToken) {
+    //         console.log('fetchCommentThread')
+    //         dispatch(fetchCommentThread(videoId, nextPageToken));
+    //     }
+    // }
     function fetchMoreComments() {
         if (nextPageToken) {
+            console.log('fetchCommentThread')
             dispatch(fetchCommentThread(videoId, nextPageToken));
         }
     }
+
+    const memoizedFetchMoreComments = useCallback(
+        () => {
+            if (nextPageToken) {
+                console.log('fetchCommentThread')
+                dispatch(fetchCommentThread(videoId, nextPageToken));
+            }
+        },
+        [videoId, nextPageToken],
+    )
+
     return (
         <WatchContent videoId={videoId} 
                       channelId={channelId}
-                      bottomReachedCallback={fetchMoreComments}
+                      bottomReachedCallback={memoizedFetchMoreComments}
                       nextPageToken={nextPageToken}
         />
     )
