@@ -21,6 +21,22 @@ const WatchContent = (props) => {
     const amountComments = getAmountComments(video);
     const dispatch = useDispatch();
     
+    const videoComponent = useMemo(() => 
+        <Video className='video' id={props.videoId}/>,
+        [props.videoId]);
+    const videoMetadataComponent = useMemo(() =>
+        <VideoMetadata video={video}/>,
+        [video]);
+    const videoInfoBoxComponent = useMemo(() => 
+        <VideoInfoBox className='video-info-box' video={video} channel={channel}/>,
+        [video, channel]);
+    const commentsComponent = useMemo(() =>
+        <Comments className='comments' comments={comments} amountComments={amountComments}/>,
+        [comments, amountComments]);
+    const relatedVideosComponent = useMemo(() => 
+        <RelatedVideos className='relatedVideos' videos={relatedVideos}/>,
+        [relatedVideos]);
+
     useEffect(() => {
         if (video && video.id) {
             dispatch(saveWatchedVideo({[props.videoId]: video}));
@@ -38,11 +54,11 @@ const WatchContent = (props) => {
     return (
         <InfiniteScroll bottomReachedCallback={props.bottomReachedCallback} showLoader={shouldShowLoader()}>
             <div className='watch-grid'>
-                <Video className='video' id={props.videoId}/>
-                <VideoMetadata video={video}/>
-                <VideoInfoBox className='video-info-box' video={video} channel={channel}/>
-                <Comments className='comments' comments={comments} amountComments={amountComments}/>
-                <RelatedVideos className='relatedVideos' videos={relatedVideos}/>
+                {videoComponent}
+                {videoMetadataComponent}
+                {videoInfoBoxComponent}
+                {commentsComponent}
+                {relatedVideosComponent}
             </div>
         </InfiniteScroll>
     );

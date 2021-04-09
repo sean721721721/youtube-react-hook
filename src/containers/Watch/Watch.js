@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import * as watchActions from '../../store/actions/watch';
 import {getSearchParam} from '../../services/url';
