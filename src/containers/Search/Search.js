@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {getSearchNextPageToken, getSearchResults} from '../../store/reducers/search';
 import * as searchActions from '../../store/actions/search';
 import './Search.scss';
@@ -15,29 +15,29 @@ const Search = (props) => {
     const nextPageToken = useSelector(state => getSearchNextPageToken(state));
     const dispatch = useDispatch();
 
+    const getSearchQuery = useCallback(() => getSearchParam(props.location, 'search_query')
+        , [props.location]
+    );
+
+    const searching = useCallback(() => {
+        const searchQuery = getSearchQuery();
+        if (youtubeApiLoaded) {
+            dispatch(searchForVideos(searchQuery));
+        }
+    }, [dispatch, getSearchQuery, youtubeApiLoaded])
+
     useEffect(() => {
         if (!getSearchQuery()) {
             props.history.push('/');
         }
         searching();
-    }, []);
+    }, [getSearchQuery, props.history, searching]);
 
     useEffect(() => {
         if (youtubeApiLoaded) {
             searching();
         }
-    }, [youtubeApiLoaded]);
-
-    function getSearchQuery() {
-        return getSearchParam(props.location, 'search_query');
-    }
-
-    function searching() {
-        const searchQuery = getSearchQuery();
-        if (youtubeApiLoaded) {
-            dispatch(searchForVideos(searchQuery));
-        }
-    }
+    }, [searching, youtubeApiLoaded]);
 
     function bottomReachedCallback() {
         if (nextPageToken) {

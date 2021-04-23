@@ -1,41 +1,20 @@
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 import Home from './containers/Home/Home';
 import AppLayout from './components/AppLayout/AppLayout';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import Watch from './containers/Watch/Watch';
 import Trending from './containers/Trending/Trending';
 import Search from './containers/Search/Search';
-import {bindActionCreators} from 'redux';
-import {connect, useDispatch} from 'react-redux';
-import {youtubeLibraryLoaded} from './store/actions/api';
 import {key} from './config';
 import History from './containers/History/History';
+import useLoadYoutubeApi from './useLoadYoutubeApi';
 
 
 const API_KEY = key;
 
 const App = (props) => {
     const { history, location } = props;
-    const dispatch = useDispatch();
-    useEffect(() => {
-        loadYoutubeApi();
-    }, [])
-
-    function loadYoutubeApi() {
-        const script = document.createElement("script");
-        script.src = "https://apis.google.com/js/client.js";
-    
-        script.onload = () => {
-            window.gapi.load('client', () => {
-                window.gapi.client.setApiKey(API_KEY);
-                window.gapi.client.load('youtube', 'v3', () => {
-                    dispatch(youtubeLibraryLoaded());
-                });
-            });
-        };
-    
-        document.body.appendChild(script);
-    }
+    useLoadYoutubeApi(API_KEY);
     return (
         <AppLayout>
             <Switch>

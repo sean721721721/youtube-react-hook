@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import VideoGrid from '../../../components/VideoGrid/VideoGrid';
 import {InfiniteScroll} from '../../../components/InfiniteScroll/InfiniteScroll';
 import './HomeContent.scss';

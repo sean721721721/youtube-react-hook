@@ -33,7 +33,7 @@ const Home = () => {
             dispatch(fetchMostPopularVideos());
             dispatch(fetchVideoCategories());
         }
-    }, [youtubeLibraryLoaded]);
+    }, [dispatch, youtubeLibraryLoaded]);
 
     function usePreviousVideoCategories(categories) {
         const ref = useRef();

@@ -41,7 +41,7 @@ const WatchContent = (props) => {
         if (video && video.id) {
             dispatch(saveWatchedVideo({[props.videoId]: video}));
         }
-    }, [props.nextPageToken]);
+    }, [dispatch, props.nextPageToken, props.videoId, video]);
 
     function shouldShowLoader() {
         return !!props.nextPageToken;
