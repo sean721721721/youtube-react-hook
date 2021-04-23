@@ -4,10 +4,9 @@ const initialState = {
     byVideo: {},
 };
 
-export default function (state = initialState, action) {
+export default function historyReducer (state = initialState, action) {
     switch (action.type) {
         case WATCHED_VIDEO:
-            const video = action.video;
             return {
                 byVideo: {
                     ...state.byVideo,

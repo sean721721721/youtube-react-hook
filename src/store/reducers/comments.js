@@ -8,7 +8,7 @@ const initialState = {
     byId: {},
 };
 
-export default function (state = initialState, action) {
+export default function commentsReducer (state = initialState, action) {
     switch (action.type) {
         case WATCH_DETAILS[SUCCESS]:
             return reduceWatchDetails(action.response, action.videoId, state);

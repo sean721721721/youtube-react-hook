@@ -1,4 +1,4 @@
-import {mostPopular, MOST_POPULAR, MOST_POPULAR_BY_CATEGORY, VIDEO_CATEGORIES} from '../actions/video';
+import { MOST_POPULAR, MOST_POPULAR_BY_CATEGORY, VIDEO_CATEGORIES} from '../actions/video';
 import {SUCCESS} from '../actions';
 import {VIDEO_LIST_RESPONSE, SEARCH_LIST_RESPONSE} from '../api/youtube-response-types';
 import {getSearchParam} from '../../services/url';
@@ -12,7 +12,7 @@ const initialState = {
     related: {},
 };
 
-export default function videos(state = initialState, action) {
+export default function videosReducer (state = initialState, action) {
     switch (action.type) {
         case MOST_POPULAR[SUCCESS]:
             return reduceFetchMostPopularVideos(action.response, state);

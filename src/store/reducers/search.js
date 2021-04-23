@@ -1,7 +1,7 @@
 import {SEARCH_FOR_VIDEOS} from '../actions/search';
 import {REQUEST, SUCCESS} from '../actions';
 
-export default function(state = {}, action) {
+export default function searchReducer (state = {}, action) {
     switch (action.type) {
         case SEARCH_FOR_VIDEOS[SUCCESS]:
             return reduceSearchForVideos(action.response, action.searchQuery, state);

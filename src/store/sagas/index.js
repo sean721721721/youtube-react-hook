@@ -2,7 +2,7 @@ import {all, call, put, fork} from 'redux-saga/effects';
 import { watchCommentThread } from './comment';
 import { watchSearchForVideos } from './search';
 import { watchMostPopularVideosByCategory, watchVideoCategories, watchMostPopularVideos } from './video';
-import {watchWatchDetails} from './watch';
+import { watchWatchDetails } from './watch';
 
 export default function* () {
     yield all([
